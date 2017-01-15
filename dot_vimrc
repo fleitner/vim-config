@@ -39,8 +39,6 @@ set nowildmenu
 " Enable filetype plugins
 " Required for taglist
 filetype on
-" Open the tagList on the right side
-let Tlist_Use_Right_Window=1
 nnoremap <silent> <F8> :TlistToggle<CR>
 
 autocmd  FileType text setlocal tw=72 wrap spell
