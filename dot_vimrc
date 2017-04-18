@@ -36,6 +36,9 @@ set hidden
 set wildmode=longest,list
 set nowildmenu
 
+" set PATH to be recursive
+set path+=**
+
 " Enable filetype plugins
 " Required for taglist
 filetype on
