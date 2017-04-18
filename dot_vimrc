@@ -39,6 +39,9 @@ set nowildmenu
 " set PATH to be recursive
 set path+=**
 
+" Show line numbers
+set nu
+
 " Enable filetype plugins
 " Required for taglist
 filetype on
