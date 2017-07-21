@@ -38,7 +38,6 @@ function s:WindowsCodingStyle()
 endfunction
 
 function s:OVSCodingStyle()
-    echo "OVS"
     call s:OVSFormatting()
     call s:OVSKeywords()
     call s:OVSHighlighting()
