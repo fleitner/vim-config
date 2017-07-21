@@ -5,51 +5,15 @@
 " This script is inspired from an article written by Bart:
 " http://www.jukie.net/bart/blog/vim-and-linux-coding-style
 " and various user comments.
-"
-" For those who want to apply these options conditionally, you can define an
-" array of patterns in your vimrc and these options will be applied only if
-" the buffer's path matches one of the pattern. In the following example,
-" options will be applied only if "/linux/" or "/kernel" is in buffer's path.
-"
-"   let g:linuxsty_patterns = [ "/linux/", "/kernel/" ]
 
-if exists("g:loaded_linuxsty")
+
+command! LoadCodingStyle call s:StyleConfigure()
+if exists("g:projects_kernel_loaded")
     finish
 endif
-let g:loaded_linuxsty = 1
+let g:projects_kernel_loaded = 1
 
-set wildignore+=*.ko,*.mod.c,*.order,modules.builtin
-
-augroup linuxsty
-    autocmd!
-
-    autocmd FileType c,cpp call s:LinuxConfigure()
-    autocmd FileType diff,kconfig setlocal tabstop=8
-augroup END
-
-function s:LinuxConfigure()
-    let apply_style = 0
-
-    if exists("g:linuxsty_patterns")
-        let path = expand('%:p')
-        for p in g:linuxsty_patterns
-            if path =~ p
-                let apply_style = 1
-                break
-            endif
-        endfor
-    else
-        let apply_style = 1
-    endif
-
-    if apply_style
-        call s:LinuxCodingStyle()
-    endif
-endfunction
-
-command! LinuxCodingStyle call s:LinuxCodingStyle()
-
-function! s:LinuxCodingStyle()
+function s:StyleConfigure()
     call s:LinuxFormatting()
     call s:LinuxKeywords()
     call s:LinuxHighlighting()

@@ -10,21 +10,11 @@
 " coding style and the Open vSwitch coding style.  The Windows datapath
 " has another style but the current script lacks support for it.
 
-let g:linuxsty_subdir = "/datapath/"
-
-if exists("g:loaded_project_linuxsty")
+command! LoadCodingStyle call s:StyleConfigure()
+if exists("g:projects_ovs_loaded")
     finish
 endif
-let g:loaded_project_linuxsty = 1
-
-set wildignore+=*.ko,*.mod.c,*.order,modules.builtin
-
-augroup linuxsty
-    autocmd!
-
-    autocmd FileType c,cpp call s:StyleConfigure()
-    autocmd FileType diff,kconfig setlocal tabstop=8
-augroup END
+let g:projects_ovs_loaded = 1
 
 function s:StyleConfigure()
     let path = expand('%:p')
@@ -37,19 +27,18 @@ function s:StyleConfigure()
     endif
 endfunction
 
-command! LinuxCodingStyle call s:LinuxCodingStyle()
-
-function! s:LinuxCodingStyle()
+function s:LinuxCodingStyle()
     call s:LinuxFormatting()
     call s:LinuxKeywords()
     call s:LinuxHighlighting()
 endfunction
 
-function! s:WindowsCodingStyle()
+function s:WindowsCodingStyle()
     " Volunteers? 
 endfunction
 
-function! s:OVSCodingStyle()
+function s:OVSCodingStyle()
+    echo "OVS"
     call s:OVSFormatting()
     call s:OVSKeywords()
     call s:OVSHighlighting()
@@ -90,7 +79,7 @@ function s:OVSFormatting()
     setlocal tabstop=4
     setlocal shiftwidth=4
     setlocal softtabstop=4
-    setlocal textwidth=49
+    setlocal textwidth=80
     setlocal expandtab
 
     setlocal cindent

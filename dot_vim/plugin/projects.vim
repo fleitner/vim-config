@@ -1,6 +1,6 @@
 " File: projects.vim
 " Author: Flavio Leitner (fbl AT sysclose DOT org)
-" Version: 0.1
+" Version: 0.3
 " Last Modified: August 05, 2016
 " Copyright: Copyright (C) 2016 Flavio Leitner
 "            Permission is hereby granted to use and distribute this code,
@@ -12,37 +12,27 @@
 "            software.
 "
 
-if exists("g:loaded_projects")
-    finish
-endif
-let g:loaded_projects = 1
-let s:projects_config_path = "/home/fleitner/.vim/projects"
-
-" expand path and identify the project to load the correct config
-let path = expand('%:p')
-if path =~? '/net-next/'
-    let g:projects_plugin = 'kernel.vim'
-elseif path =~? '/linux/'
-    let g:projects_plugin = 'kernel.vim'
-elseif path =~? '/linux-stable/'
-    let g:projects_plugin = 'kernel.vim'
-elseif path =~? '/rhel5/'
-    let g:projects_plugin = 'kernel.vim'
-elseif path =~? '/rhel6/'
-    let g:projects_plugin = 'kernel.vim'
-elseif path =~? '/rhel7/'
-    let g:projects_plugin = 'kernel.vim'
-elseif path =~? 'dpdk/'
-    let g:projects_plugin = 'kernel.vim'
-elseif path =~? 'ovs/'
-    let g:projects_plugin = 'ovs.vim'
-endif
-
-if exists("g:projects_plugin")
-    let s:project_module_file = fnameescape(s:projects_config_path . '/' . g:projects_plugin)
-    if filereadable(s:project_module_file)
-        execute 'source '.s:project_module_file
+"set verbose=9
+function! s:LoadProject(path)
+    let b:projects_config_path = "~/.vim/projects"
+    " default plugin
+    let b:projects_plugin = 'kernel.vim'
+    " check if this is an OVS repo
+    if a:path =~? 'ovs/[^datapath]'
+        let b:projects_plugin = 'ovs.vim'
     endif
-endif
+
+    " load the style
+    if exists("b:projects_plugin")
+        let b:project_module_file = fnameescape(b:projects_config_path . '/' . b:projects_plugin)
+        execute 'source '.b:project_module_file
+        LoadCodingStyle
+    endif
+endfun
+
+augroup projects
+    autocmd!
+    autocmd BufNewFile,BufRead * call s:LoadProject(expand("<afile>:p:~"))
+augroup end
 
 " vim: ts=4 et sw=4
