@@ -15,10 +15,20 @@
 "set verbose=9
 function! s:LoadProject(path)
     let b:projects_config_path = "~/.vim/projects"
-    " default plugin
-    let b:projects_plugin = 'kernel.vim'
     " check if this is an OVS repo
     if a:path =~? 'ovs/[^datapath]'
+        let b:projects_plugin = 'ovs.vim'
+    elseif a:path =~? 'ovs/datapath'
+        let b:projects_plugin = 'kernel.vim'
+    elseif a:path =~? 'rhel7/'
+        let b:projects_plugin = 'kernel.vim'
+    elseif a:path =~? 'net-next/'
+        let b:projects_plugin = 'kernel.vim'
+    elseif a:path =~? 'net/'
+        let b:projects_plugin = 'kernel.vim'
+    elseif a:path =~? 'linux/'
+        let b:projects_plugin = 'kernel.vim'
+    elseif a:path =~? 'cmt/'
         let b:projects_plugin = 'ovs.vim'
     endif
 
