@@ -39,8 +39,15 @@ set nowildmenu
 " set PATH to be recursive
 set path+=**
 
-" Show line numbers
-set nu
+" Most of VIM commands use relative numbers, so enable them but at the
+" same time show the absolute number for reference. Disable relative
+" numbers if the window/buffer is not selected.
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,WinEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,WinLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 command! Vshell execute 'set splitright| vertical term'
 
