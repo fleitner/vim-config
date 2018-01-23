@@ -49,7 +49,8 @@ command! Vshell execute 'set splitright| vertical term'
 filetype on
 nnoremap <silent> <F8> :TlistToggle<CR>
 
-autocmd  FileType text setlocal tw=72 wrap spell
+autocmd FileType text setlocal tw=72 wrap
+hi SpellBad  ctermbg=red ctermfg=black
 
 " Enable the display of function names in the status line (ctags.vim)
 let g:ctags_statusline=1
