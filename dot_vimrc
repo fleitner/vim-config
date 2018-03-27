@@ -1,11 +1,15 @@
 " Dark background
 set background=dark
 
+" Enable filetype plugins
+" Required for taglist
+filetype plugin indent on
+
 " Enable syntax
 syntax enable
 
 " Solarized
-colorscheme solarized
+"colorscheme solarized
 
 " Start searching as you type
 set incsearch
@@ -36,24 +40,25 @@ set hidden
 set wildmode=longest,list
 set nowildmenu
 
+" enable modelines
+set modeline
+
 " set PATH to be recursive
 set path+=**
 
-" Most of VIM commands use relative numbers, so enable them but at the
-" same time show the absolute number for reference. Disable relative
-" numbers if the window/buffer is not selected.
-set number relativenumber
-augroup numbertoggle
-  autocmd!
-  autocmd BufEnter,WinEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,WinLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
+"" Most of VIM commands use relative numbers, so enable them but at the
+"" same time show the absolute number for reference. Disable relative
+"" numbers if the window/buffer is not selected.
+"set number relativenumber
+"augroup numbertoggle
+"  autocmd!
+"  autocmd BufEnter,WinEnter,FocusGained,InsertLeave * set relativenumber
+"  autocmd BufLeave,WinLeave,FocusLost,InsertEnter   * set norelativenumber
+"augroup END
+set number
 
 command! Vshell execute 'set splitright| vertical term'
 
-" Enable filetype plugins
-" Required for taglist
-filetype on
 nnoremap <silent> <F8> :TlistToggle<CR>
 
 autocmd FileType text setlocal tw=72 wrap
@@ -227,13 +232,3 @@ if has("cscope")
     "set ttimeoutlen=100
 
 endif
-
-" Breaking Bad Habits
-inoremap <up> <nop>
-vnoremap <up> <nop>
-inoremap <down> <nop>
-vnoremap <down> <nop>
-inoremap <left> <nop>
-vnoremap <left> <nop>
-inoremap <right> <nop>
-vnoremap <right> <nop>
