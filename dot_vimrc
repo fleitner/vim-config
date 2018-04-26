@@ -43,26 +43,44 @@ set nowildmenu
 " enable modelines
 set modeline
 
+" highlight columns after 80
+" Place a marker in the row when it exceeds 80 chars
+highlight OverColLimit term=inverse,bold cterm=bold ctermbg=darkgray gui=bold guibg=red guifg=white
+call matchadd('OverColLimit', '\%81v.\+', 100)
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+call matchadd('ExtraWhitespace', '\s\+\%#\@<!$')
+
+" highlight current line
+highlight CursorLine ctermbg=233 cterm=none
+set cursorline
+" highlight current column
+highlight CursorColumn ctermbg=233 cterm=none
+set cursorcolumn
+
 " set PATH to be recursive
 set path+=**
 
 "" Most of VIM commands use relative numbers, so enable them but at the
 "" same time show the absolute number for reference. Disable relative
 "" numbers if the window/buffer is not selected.
-"set number relativenumber
-"augroup numbertoggle
-"  autocmd!
-"  autocmd BufEnter,WinEnter,FocusGained,InsertLeave * set relativenumber
-"  autocmd BufLeave,WinLeave,FocusLost,InsertEnter   * set norelativenumber
-"augroup END
+set number relativenumber
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,WinEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,WinLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 set number
 
 command! Vshell execute 'set splitright| vertical term'
 
 nnoremap <silent> <F8> :TlistToggle<CR>
 
-autocmd FileType text setlocal tw=72 wrap
-hi SpellBad  ctermbg=red ctermfg=black
+autocmd FileType rst setlocal tw=79 wrap spell
+autocmd FileType text setlocal tw=72 wrap spell
+autocmd FileType gitcommit setlocal tw=68 wrap spell
+autocmd FileType mail highlight ExtraWhitespace none
+hi SpellBad ctermfg=160 ctermbg=none
 
 " Enable the display of function names in the status line (ctags.vim)
 let g:ctags_statusline=1
